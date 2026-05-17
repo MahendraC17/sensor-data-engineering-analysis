@@ -22,8 +22,8 @@ The pipeline cleans, validates, and merges both datasets into a final time-serie
 | date                | Multiple date formats                                  | 3 formats detected                                            | Repair         | Standardized parsing required for consistency                           |
 | ndvi_value          | Invalid biological values outside [-1, 1]              | 104 invalid records                                                   | Flag + Exclude | Impossible values will distort vegetation analysis                      |
 | sensor_status       | Whitespace, casing inconsistencies, and missing values | 137 missing values detected                                   | Repair         | Standardization for proper categorising     |
-| parcel coverage (orphan parcel_id)   | Incomplete temporal coverage                           | Compared to the other parcels with ~135 records, Parcels 098 and 099 has only ~20 records each, roughly 15% of the volume | Preserve + Isolate         | Preserved for future interpretation, implemtation                            |
-| temporal continuity (orphan parcel_id) | Large temporal gaps                                    | 90-day and 63-day discontinuities detected for Parcels 098 and 099 respectively                   | Preserve + Isolate         |     Preserved for future interpretation, or deployment                                |
+| parcel coverage (orphan parcel_id)   | Incomplete temporal coverage                           | Compared to the other parcels with ~135 records, Parcels 098 and 099 has only ~20 records each, roughly 15% of the volume | Preserve + Isolate         | Preserved for future interpretation, deployment                            |
+| temporal continuity (orphan parcel_id) | Large temporal gaps                                    | 90-day and 63-day discontinuities detected for Parcels 098 and 099 respectively                   | Preserve + Isolate         |     Temporal discontinuities were preserved because they may represent real or testing outages, ingestion failures
 
 ---
 
@@ -56,7 +56,9 @@ The pipeline performs the following steps:
 
 NDVI values generally increase after sowing, indicating expected vegetation growth activity following crop establishment.
 
-It was asked to ignore the bad `sensor_status` observations, only  CORRUPTED NDVI readings were removed from the final analysis. DEGRADED and UNKNOWN sensor states were preserved (for before and after NDVI analysis) when NDVI values remained plausible, because operational instability may still contain importaant informattion regarding the sensors useful for vegetation signals.
+It was asked to ignore the bad `sensor_status` observations, only  CORRUPTED NDVI readings were removed and isolated from the final analysis. DEGRADED and UNKNOWN sensor states were preserved (for before and after NDVI analysis) when NDVI values remained plausible, because operational instability may still contain importaant informattion regarding the sensors useful for vegetation signals.
+
+The increase in post sowing NDVI across all crop categories aligns with expected vegetation development following crop establishment, suggesting that the trusted subset retained biologically meaningful signals despite inconsistencies in the raw system.
 
 Sugarcane shows the highest post-sowing NDVI increase and also dominates the dataset with 19 parcels, while soybean and wheat contain only 4 and 2 parcels respectively. As a result, the soybean and wheat aggregates are less statistically stable and more sensitive to parcel-level variation.
 
