@@ -4,11 +4,12 @@
 
 This project aim is to analyse agricultural parcel metadata and NDVI (Normalized difference vegetation index) sensor readings to evaluate:
 
-* data quality,
-* sensor reliability,
-* temporal consistency,
-* and overall pipeline health if scaled
-The pipeline cleans, validates, and merges both datasets into a final time-series dataset suitable for analysis.
+- data quality,
+- sensor reliability,
+- explain the findings,
+- and overall quality before any modeling or time series analysis.
+
+This pipeline cleans, validates, and merges both datasets into a final time-series dataset suitable for analysis.
 
 ---
 
